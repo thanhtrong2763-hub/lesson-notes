@@ -234,21 +234,33 @@
                         <tbody>
                             <tr>
                                 <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 w-1/4 font-semibold text-slate-700">Student Name:</td>
-                                <td class="border border-slate-300 p-3 w-1/4 min-w-[120px] focus:bg-slate-50/10" contenteditable="true" placeholder="Type name here" id="student-name"></td>
+                                <td class="border border-slate-300 p-0 w-1/4 min-w-[120px] focus-within:bg-slate-50/10">
+                                    <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="Type name here" id="student-name"></div>
+                                </td>
                                 <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 w-1/4 font-semibold text-slate-700">Date:</td>
-                                <td class="border border-slate-300 p-3 w-1/4 min-w-[120px] focus:bg-slate-50/10" contenteditable="true" placeholder="DD/MM/YYYY" id="lesson-date"></td>
+                                <td class="border border-slate-300 p-0 w-1/4 min-w-[120px] focus-within:bg-slate-50/10">
+                                    <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="DD/MM/YYYY" id="lesson-date"></div>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Subject/Course:</td>
-                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="Course name" id="subject-course">English</td>
+                                <td class="border border-slate-300 p-0 focus-within:bg-slate-50/10">
+                                    <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="Course name" id="subject-course">English</div>
+                                </td>
                                 <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Lesson No:</td>
-                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. #12" id="lesson-no"></td>
+                                <td class="border border-slate-300 p-0 focus-within:bg-slate-50/10">
+                                    <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. #12" id="lesson-no"></div>
+                                </td>
                             </tr>
                             <tr>
                                 <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Today's Topic:</td>
-                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Simple Past vs Present Perfect" id="today-topic"></td>
+                                <td class="border border-slate-300 p-0 focus-within:bg-slate-50/10">
+                                    <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. Simple Past vs Present Perfect" id="today-topic"></div>
+                                </td>
                                 <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Next Lesson:</td>
-                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="Target skill / date" id="next-lesson"></td>
+                                <td class="border border-slate-300 p-0 focus-within:bg-slate-50/10">
+                                    <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="Target skill / date" id="next-lesson"></div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -268,31 +280,45 @@
                             <tbody>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Vocabulary</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. New words, idiomatic expressions, definitions..." id="focus-vocab"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 min-h-[50px] w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. New words, idiomatic expressions, definitions..." id="focus-vocab"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Grammar</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Key tenses, grammatical rules practiced..." id="focus-grammar"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 min-h-[50px] w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. Key tenses, grammatical rules practiced..." id="focus-grammar"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Pronunciation</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Word stress patterns, difficult sounds practiced..." id="focus-pron"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 min-h-[50px] w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. Word stress patterns, difficult sounds practiced..." id="focus-pron"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Reading</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Comprehension text details, new reading skills..." id="focus-reading"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 min-h-[50px] w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. Comprehension text details, new reading skills..." id="focus-reading"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Listening</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Audio exercises, audio keywords list..." id="focus-listening"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 min-h-[50px] w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. Audio exercises, audio keywords list..." id="focus-listening"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Speaking</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Conversational speech topic, fluency notes..." id="focus-speaking"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 min-h-[50px] w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. Conversational speech topic, fluency notes..." id="focus-speaking"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Writing</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Sentence composition, written feedback..." id="focus-writing"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 min-h-[50px] w-full focus:outline-none cursor-text" contenteditable="true" placeholder="e.g. Sentence composition, written feedback..." id="focus-writing"></div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -327,15 +353,21 @@
                             <tbody>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-bold text-indigo-700 bg-indigo-50/10">Teacher's Shout-Out!</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text italic font-medium focus:bg-slate-50/10" contenteditable="true" placeholder="What I was most proud of today was..." id="feedback-shoutout"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text italic font-medium" contenteditable="true" placeholder="What I was most proud of today was..." id="feedback-shoutout"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-bold text-emerald-700 bg-emerald-50/10">Key Strengths</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="• Highlight what went exceptionally well today..." id="feedback-strengths"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="• Highlight what went exceptionally well today..." id="feedback-strengths"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-bold text-rose-700 bg-rose-50/10">Areas to Focus On</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="• Mistakes to correct, concepts to revise, or confidence milestones..." id="feedback-focus"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="• Mistakes to correct, concepts to revise, or confidence milestones..." id="feedback-focus"></div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -357,38 +389,66 @@
                             <tbody>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Vocabulary</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="No vocabulary homework assigned today." id="hw-vocab"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-vocab-due"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="No vocabulary homework assigned today." id="hw-vocab"></div>
+                                    </td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10 text-center">
+                                        <div class="p-3 w-full focus:outline-none cursor-text text-center" contenteditable="true" placeholder="N/A" id="hw-vocab-due"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Grammar</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="No grammar homework assigned today." id="hw-grammar"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-grammar-due"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="No grammar homework assigned today." id="hw-grammar"></div>
+                                    </td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10 text-center">
+                                        <div class="p-3 w-full focus:outline-none cursor-text text-center" contenteditable="true" placeholder="N/A" id="hw-grammar-due"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Pronunciation</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-pron"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-pron-due"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="N/A" id="hw-pron"></div>
+                                    </td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10 text-center">
+                                        <div class="p-3 w-full focus:outline-none cursor-text text-center" contenteditable="true" placeholder="N/A" id="hw-pron-due"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Reading</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-reading"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-reading-due"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="N/A" id="hw-reading"></div>
+                                    </td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10 text-center">
+                                        <div class="p-3 w-full focus:outline-none cursor-text text-center" contenteditable="true" placeholder="N/A" id="hw-reading-due"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Listening</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-listening"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-listening-due"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="N/A" id="hw-listening"></div>
+                                    </td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10 text-center">
+                                        <div class="p-3 w-full focus:outline-none cursor-text text-center" contenteditable="true" placeholder="N/A" id="hw-listening-due"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Speaking</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-speaking"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-speaking-due"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="N/A" id="hw-speaking"></div>
+                                    </td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10 text-center">
+                                        <div class="p-3 w-full focus:outline-none cursor-text text-center" contenteditable="true" placeholder="N/A" id="hw-speaking-due"></div>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Writing</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-writing"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-writing-due"></td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10">
+                                        <div class="p-3 w-full focus:outline-none cursor-text" contenteditable="true" placeholder="N/A" id="hw-writing"></div>
+                                    </td>
+                                    <td class="border border-slate-300 p-0 relative focus-within:bg-slate-50/10 text-center">
+                                        <div class="p-3 w-full focus:outline-none cursor-text text-center" contenteditable="true" placeholder="N/A" id="hw-writing-due"></div>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
