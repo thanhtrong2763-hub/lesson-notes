@@ -51,6 +51,18 @@
             display: block;
         }
 
+        /* Color Theme Variables */
+        :root {
+            --bg-workspace: #FDFBF7;
+            --bg-sheet: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-primary: #8a7a5f;
+            --accent-light: #f5f2eb;
+            --border-color: #cbd5e1;
+            --table-header: #faf8f5;
+        }
+
         .theme-ivory {
             --bg-workspace: #FDFBF7;
             --bg-sheet: #ffffff;
@@ -63,82 +75,83 @@
         }
 
         .theme-sage {
-            --bg-workspace: #f4f6f4;
+            --bg-workspace: #f2f5f2;
             --bg-sheet: #ffffff;
-            --text-main: #2c3e2e;
-            --text-muted: #5c6f5e;
+            --text-main: #1c2b1e;
+            --text-muted: #4e5f50;
             --accent-primary: #556b2f;
             --accent-light: #edf1ed;
-            --border-color: #cdd6cd;
-            --table-header: #f2f5f2;
+            --border-color: #b8c4b8;
+            --table-header: #e6ebe6;
         }
 
         .theme-midnight {
-            --bg-workspace: #0f172a;
-            --bg-sheet: #1e293b;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-workspace: #090d16;
+            --bg-sheet: #111827;
+            --text-main: #f3f4f6;
+            --text-muted: #9ca3af;
             --accent-primary: #38bdf8;
-            --accent-light: #1e293b;
-            --border-color: #475569;
-            --table-header: #1e293b;
+            --accent-light: #1f2937;
+            --border-color: #374151;
+            --table-header: #1f2937;
         }
 
         body {
-            background-color: var(--bg-main);
+            background-color: var(--bg-workspace) !important;
             color: var(--text-main);
-            font-family: var(--font-sans);
             transition: all 0.3s ease;
-            line-height: 1.5;
-            padding: 2rem 1rem;
-        }
-        .container {
-            max-width: 1400px; /* Increased from 900px to utilize full screen space */
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 320px; /* More comfortable sidebar ratio */
-            gap: 2.5rem;
-            width: 95%; /* Adapts dynamically to wider monitors */
-        }
-        @media (max-width: 1024px) {
-            .container { 
-                grid-template-columns: 1fr; 
-                width: 100%;
-            }
-            .sidebar { position: static !important; }
-        }
-        .main-workspace {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 3rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
-        }
-        .panel h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; margin-top: 1rem; color: var(--text-muted); }
-        .panel h3:first-of-type { margin-top: 0; }
-        .status-msg {
-            font-size: 0.8rem;
-            text-align: center;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-            min-height: 1.2rem;
         }
 
+        /* Sheet styling matching theme custom properties */
+        .print-sheet {
+            background-color: var(--bg-sheet) !important;
+            border-color: var(--border-color) !important;
+            color: var(--text-main) !important;
+        }
+
+        .print-sheet h1, .print-sheet h2, .print-sheet p {
+            color: var(--text-main) !important;
+        }
+
+        .print-sheet table, .print-sheet td, .print-sheet th {
+            border-color: var(--border-color) !important;
+        }
+
+        .print-sheet th {
+            background-color: var(--table-header) !important;
+            color: var(--text-main) !important;
+        }
+
+        .print-sheet td {
+            color: var(--text-main) !important;
+        }
+
+        .print-sheet [contenteditable="true"] {
+            color: var(--text-main) !important;
+        }
+
+        .print-sheet .meta-label {
+            background-color: var(--table-header) !important;
+        }
+
+        /* Printable stylesheet fixes */
         @media print {
+            .no-print, header, aside, .sidebar, #toast-container {
+                display: none !important;
+            }
             body {
                 background: white !important;
                 color: black !important;
                 padding: 0 !important;
                 font-size: 11pt;
             }
-            .container {
-                display: block !important;
+            main {
+                padding: 0 !important;
+                margin: 0 !important;
                 max-width: 100% !important;
                 width: 100% !important;
-                margin: 0 !important;
-                padding: 0 !important;
             }
-            .main-workspace {
+            .print-sheet {
                 border: none !important;
                 box-shadow: none !important;
                 padding: 0 !important;
@@ -147,34 +160,23 @@
                 max-width: 100% !important;
                 background: transparent !important;
             }
-            .sidebar {
-                display: none !important; /* Hides the right side function panel entirely on print */
-            }
             table {
                 page-break-inside: avoid;
                 width: 100% !important;
             }
-            textarea {
-                resize: none !important;
-                border: none !important;
-                background: transparent !important;
-                overflow: visible !important;
-                height: auto !important;
-            }
-            .canvas-area {
-                border: 1px solid #cbd5e1 !important;
-                background: transparent !important;
-                min-height: 300px !important;
+            [contenteditable="true"]:empty:before {
+                content: "" !important;
             }
         }
     </style>
 </head>
 <body class="theme-ivory min-h-screen flex flex-col font-sans transition-all duration-300">
 
-    <header class="no-print bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 px-4 py-3 sm:px-6">
+    <!-- Sticky Navigation Header (Excluded during printing) -->
+    <header class="no-print bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 px-4 py-3 sm:px-6 shadow-sm">
         <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
             <div class="flex items-center gap-3">
-                <div class="h-10 w-10 rounded-xl bg-amber-600/10 flex items-center justify-center text-amber-700">
+                <div class="h-10 w-10 rounded-xl bg-indigo-600/10 flex items-center justify-center text-indigo-700">
                     <i class="fa-solid fa-graduation-cap text-xl"></i>
                 </div>
                 <div>
@@ -184,8 +186,8 @@
             </div>
 
             <div class="flex flex-wrap items-center gap-3">
-                <!-- Color Themes -->
-                <div class="flex bg-slate-100 p-1 rounded-xl items-center gap-1 mr-2">
+                <!-- Color Themes Controller -->
+                <div class="flex bg-slate-100 p-1 rounded-xl items-center gap-1 mr-2 border border-slate-200">
                     <button onclick="setTheme('theme-ivory')" id="btn-theme-ivory" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 bg-white shadow-sm text-amber-800">
                         Ivory
                     </button>
@@ -198,15 +200,15 @@
                 </div>
 
                 <!-- Tools -->
-                <button onclick="copyToClipboard()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs sm:text-sm px-4 py-2 rounded-xl transition-all shadow-sm hover:shadow flex items-center gap-2">
+                <button onclick="copyToClipboard()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition-all shadow-sm hover:shadow flex items-center gap-2">
                     <i class="fa-solid fa-copy"></i>
                     <span>Copy to Word / Docs</span>
                 </button>
-                <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-medium text-xs sm:text-sm px-4 py-2 rounded-xl transition-all shadow-sm hover:shadow flex items-center gap-2">
+                <button onclick="window.print()" class="bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs sm:text-sm px-4 py-2.5 rounded-xl transition-all shadow-sm hover:shadow flex items-center gap-2">
                     <i class="fa-solid fa-print"></i>
                     <span>Print / PDF</span>
                 </button>
-                <button onclick="resetTemplate()" class="bg-red-50 hover:bg-red-100 text-red-600 font-medium text-xs px-3 py-2 rounded-xl transition-all border border-red-100 flex items-center gap-1.5">
+                <button onclick="resetTemplate()" class="bg-red-50 hover:bg-red-100 text-red-600 font-semibold text-xs px-3 py-2.5 rounded-xl transition-all border border-red-100 flex items-center gap-1.5">
                     <i class="fa-solid fa-trash-can"></i>
                     <span>Reset</span>
                 </button>
@@ -214,38 +216,39 @@
         </div>
     </header>
 
-    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-6 sm:px-6 flex flex-col lg:flex-row gap-6">
+    <!-- Main Workspace Setup -->
+    <main class="flex-grow max-w-7xl mx-auto w-full px-4 py-6 sm:px-6 flex flex-col xl:flex-row gap-8">
         
-        <!-- Editable Document Container -->
-        <section class="flex-grow lg:w-2/3 max-w-4xl mx-auto">
-            <div id="lesson-notes-sheet" class="print-sheet bg-[var(--bg-sheet)] border border-slate-200 rounded-2xl shadow-xl p-6 md:p-10 transition-colors duration-300">
+        <!-- Editable Document Section -->
+        <section class="flex-grow xl:w-2/3 max-w-5xl mx-auto w-full">
+            <div id="lesson-notes-sheet" class="print-sheet bg-white border border-slate-200 rounded-2xl shadow-xl p-6 md:p-10 transition-colors duration-300">
                 
-                <!-- Main Header Title -->
+                <!-- Lesson Notes Main Header Title -->
                 <div class="text-center mb-8">
-                    <h1 class="font-serif text-3xl md:text-4xl font-semibold tracking-wide text-[var(--text-main)] uppercase" id="editable-doc-title" contenteditable="true" placeholder="English Lesson Notes & Feedback">ENGLISH LESSON NOTES & FEEDBACK</h1>
+                    <h1 class="font-serif text-3xl md:text-4xl font-semibold tracking-wide uppercase" id="editable-doc-title" contenteditable="true" placeholder="English Lesson Notes & Feedback">ENGLISH LESSON NOTES & FEEDBACK</h1>
                 </div>
 
-                <!-- Meta Metadata Table -->
+                <!-- Student Metadata Table -->
                 <div class="overflow-x-auto mb-8">
                     <table class="w-full border-collapse border border-slate-300 text-sm md:text-base">
                         <tbody>
                             <tr>
-                                <td class="border border-slate-300 p-3 bg-slate-50/50 w-1/4 font-semibold text-slate-700">Student Name:</td>
-                                <td class="border border-slate-300 p-3 w-1/4 min-w-[120px]" contenteditable="true" placeholder="Type name here" id="student-name"></td>
-                                <td class="border border-slate-300 p-3 bg-slate-50/50 w-1/4 font-semibold text-slate-700">Date:</td>
-                                <td class="border border-slate-300 p-3 w-1/4 min-w-[120px]" contenteditable="true" placeholder="DD/MM/YYYY" id="lesson-date"></td>
+                                <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 w-1/4 font-semibold text-slate-700">Student Name:</td>
+                                <td class="border border-slate-300 p-3 w-1/4 min-w-[120px] focus:bg-slate-50/10" contenteditable="true" placeholder="Type name here" id="student-name"></td>
+                                <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 w-1/4 font-semibold text-slate-700">Date:</td>
+                                <td class="border border-slate-300 p-3 w-1/4 min-w-[120px] focus:bg-slate-50/10" contenteditable="true" placeholder="DD/MM/YYYY" id="lesson-date"></td>
                             </tr>
                             <tr>
-                                <td class="border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Subject/Course:</td>
-                                <td class="border border-slate-300 p-3" contenteditable="true" placeholder="Course name" id="subject-course">English</td>
-                                <td class="border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Lesson No:</td>
-                                <td class="border border-slate-300 p-3" contenteditable="true" placeholder="e.g. #12" id="lesson-no"></td>
+                                <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Subject/Course:</td>
+                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="Course name" id="subject-course">English</td>
+                                <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Lesson No:</td>
+                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. #12" id="lesson-no"></td>
                             </tr>
                             <tr>
-                                <td class="border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Today's Topic:</td>
-                                <td class="border border-slate-300 p-3" contenteditable="true" placeholder="e.g. Simple Past vs Present Perfect" id="today-topic"></td>
-                                <td class="border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Next Lesson:</td>
-                                <td class="border border-slate-300 p-3" contenteditable="true" placeholder="Target skill / date" id="next-lesson"></td>
+                                <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Today's Topic:</td>
+                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Simple Past vs Present Perfect" id="today-topic"></td>
+                                <td class="meta-label border border-slate-300 p-3 bg-slate-50/50 font-semibold text-slate-700">Next Lesson:</td>
+                                <td class="border border-slate-300 p-3 focus:bg-slate-50/10" contenteditable="true" placeholder="Target skill / date" id="next-lesson"></td>
                             </tr>
                         </tbody>
                     </table>
@@ -253,7 +256,7 @@
 
                 <!-- SECTION I: Today's Lesson Focus -->
                 <div class="mb-8">
-                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider text-[var(--text-main)] mb-3 pb-1">I. TODAY'S LESSON FOCUS</h2>
+                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider mb-3 pb-1">I. TODAY'S LESSON FOCUS</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse border border-slate-300 text-sm md:text-base">
                             <thead>
@@ -264,46 +267,46 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Vocabulary</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[40px]" contenteditable="true" placeholder="e.g. New words, idiomatic expressions, definitions..." id="focus-vocab"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Vocabulary</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. New words, idiomatic expressions, definitions..." id="focus-vocab"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Grammar</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="e.g. Key tenses, grammatical rules practiced..." id="focus-grammar"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Grammar</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Key tenses, grammatical rules practiced..." id="focus-grammar"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Pronunciation</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="e.g. Word stress patterns, difficult sounds practiced..." id="focus-pron"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Pronunciation</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Word stress patterns, difficult sounds practiced..." id="focus-pron"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Reading</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="e.g. Comprehension text details, new reading skills..." id="focus-reading"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Reading</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Comprehension text details, new reading skills..." id="focus-reading"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Listening</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="e.g. Audio exercises, audio keywords list..." id="focus-listening"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Listening</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Audio exercises, audio keywords list..." id="focus-listening"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Speaking</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="e.g. Conversational speech topic, fluency notes..." id="focus-speaking"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Speaking</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Conversational speech topic, fluency notes..." id="focus-speaking"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Writing</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="e.g. Sentence composition, written feedback..." id="focus-writing"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Writing</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text min-h-[50px] focus:bg-slate-50/10" contenteditable="true" placeholder="e.g. Sentence composition, written feedback..." id="focus-writing"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <!-- SECTION II: In-Class Canvas -->
+                <!-- SECTION II: In-Class Canvas Area -->
                 <div class="mb-8">
-                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider text-[var(--text-main)] mb-3 pb-1">II. IN-CLASS CANVAS</h2>
+                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider mb-3 pb-1">II. IN-CLASS CANVAS</h2>
                     <div class="border border-slate-300 rounded-lg overflow-hidden">
                         <div class="bg-slate-100/70 p-3 font-bold text-sm text-slate-800 border-b border-slate-300">
                             LIVE LESSON NOTES & CORRECTIONS (Type freely below)
                         </div>
-                        <div class="p-4 min-h-[300px] bg-slate-50/10 focus:outline-none text-base cursor-text leading-relaxed" 
+                        <div class="p-4 min-h-[350px] bg-slate-50/10 focus:outline-none text-base cursor-text leading-relaxed focus:bg-slate-50/20 transition-all" 
                              contenteditable="true" 
                              placeholder="Use this canvas as your active whiteboard! Type real-time corrections, student responses, spontaneous rules, or vocabulary brainstorm lists here..."
                              id="live-canvas-notes"></div>
@@ -312,7 +315,7 @@
 
                 <!-- SECTION III: Teacher's Feedback & Observations -->
                 <div class="mb-8">
-                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider text-[var(--text-main)] mb-3 pb-1">III. TEACHER'S FEEDBACK & OBSERVATIONS</h2>
+                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider mb-3 pb-1">III. TEACHER'S FEEDBACK & OBSERVATIONS</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse border border-slate-300 text-sm md:text-base">
                             <thead>
@@ -323,14 +326,16 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-indigo-700 bg-indigo-50/10">Teacher's Shout-Out!</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text italic" contenteditable="true" placeholder="What I was most proud of today was..." id="feedback-shoutout"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-bold text-indigo-700 bg-indigo-50/10">Teacher's Shout-Out!</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text italic font-medium focus:bg-slate-50/10" contenteditable="true" placeholder="What I was most proud of today was..." id="feedback-shoutout"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="• Highlight what went exceptionally well today..." id="feedback-strengths"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-bold text-emerald-700 bg-emerald-50/10">Key Strengths</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="• Highlight what went exceptionally well today..." id="feedback-strengths"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="• Mistakes to correct, concepts to revise, or confidence milestones..." id="feedback-focus"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-bold text-rose-700 bg-rose-50/10">Areas to Focus On</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="• Mistakes to correct, concepts to revise, or confidence milestones..." id="feedback-focus"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -339,7 +344,7 @@
 
                 <!-- SECTION IV: Homework & Action Items -->
                 <div class="mb-6">
-                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider text-[var(--text-main)] mb-3 pb-1">IV. HOMEWORK & ACTION ITEMS</h2>
+                    <h2 class="font-serif text-lg md:text-xl font-bold tracking-wider mb-3 pb-1">IV. HOMEWORK & ACTION ITEMS</h2>
                     <div class="overflow-x-auto">
                         <table class="w-full border-collapse border border-slate-300 text-sm md:text-base">
                             <thead>
@@ -351,39 +356,39 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Vocabulary</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="No vocabulary homework assigned today." id="hw-vocab"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-vocab-due"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Vocabulary</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="No vocabulary homework assigned today." id="hw-vocab"></td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-vocab-due"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Grammar</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="No grammar homework assigned today." id="hw-grammar"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-grammar-due"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Grammar</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="No grammar homework assigned today." id="hw-grammar"></td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-grammar-due"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Pronunciation</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-pron"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-pron-due"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Pronunciation</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-pron"></td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-pron-due"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Reading</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-reading"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-reading-due"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Reading</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-reading"></td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-reading-due"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Listening</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-listening"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-listening-due"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Listening</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-listening"></td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-listening-due"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Speaking</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-speaking"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-speaking-due"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Speaking</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-speaking"></td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-speaking-due"></td>
                                 </tr>
                                 <tr>
-                                    <td class="border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Writing</td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-writing"></td>
-                                    <td class="border border-slate-300 p-3 relative cursor-text" contenteditable="true" placeholder="N/A" id="hw-writing-due"></td>
+                                    <td class="meta-label border border-slate-300 p-3 font-semibold text-slate-700 bg-slate-50/30">Writing</td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10" contenteditable="true" placeholder="N/A" id="hw-writing"></td>
+                                    <td class="border border-slate-300 p-3 relative cursor-text focus:bg-slate-50/10 text-center" contenteditable="true" placeholder="N/A" id="hw-writing-due"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -395,8 +400,8 @@
             </div>
         </section>
 
-        <!-- Assistant Quick Toolbox -->
-        <aside class="no-print lg:w-1/3 flex flex-col gap-6">
+        <!-- Assistant Quick Sidebar Panel (Excluded during printing) -->
+        <aside class="no-print lg:w-1/3 flex flex-col gap-6 w-full">
             <div class="bg-white border border-slate-200 rounded-2xl shadow-md p-5 sticky top-24">
                 <div class="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
                     <h3 class="font-bold text-slate-800 text-sm flex items-center gap-2">
@@ -407,49 +412,371 @@
                 </div>
                 <p class="text-xs text-slate-500 mb-4">Click any helper capsule below to instantly insert structured text into your currently focused field!</p>
 
-                <div class="space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                <div class="space-y-4 max-h-[65vh] overflow-y-auto pr-1">
                     
                     <!-- Grammar Snippets -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Grammar & Structure</h4>
-                        <div class="flex flex-wrap gap-1.5">
-                            <button onclick="insertTemplateText('• Subject-Verb Agreement issue. Note that singular subjects require singular verbs (e.g. &quot;He plays&quot; instead of &quot;He play&quot;).')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Subject-Verb Agreement
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-indigo-500 mb-2 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-indigo-500"></span>
+                            <span>Grammar & Structure</span>
+                        </h4>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="insertTemplateText('• Subject-Verb Agreement: Note that singular subjects require singular verbs (e.g., &quot;He plays&quot; instead of &quot;He play&quot;).')" class="text-xs text-indigo-950 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Subject-Verb Agreement Rule
                             </button>
-                            <button onclick="insertTemplateText('• Tense Consistency: Keep consistent narrative tenses when recounting past events (simple past/past progressive).')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Tense Consistency
+                            <button onclick="insertTemplateText('• Tense Consistency: Keep consistent narrative tenses when recounting past events (simple past/past progressive).')" class="text-xs text-indigo-950 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Tense Consistency Guide
                             </button>
-                            <button onclick="insertTemplateText('• Prepositions of Time & Place: Master the usage differences between &quot;at&quot;, &quot;in&quot;, and &quot;on&quot;.')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Prepositions (In/On/At)
+                            <button onclick="insertTemplateText('• Prepositions of Time & Place: Master the usage differences between &quot;at&quot;, &quot;in&quot;, and &quot;on&quot;.')" class="text-xs text-indigo-950 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Prepositions (In / On / At)
                             </button>
-                            <button onclick="insertTemplateText('• Article Usage: Remember to use indefinite articles (&quot;a/an&quot;) for singular count nouns, and &quot;the&quot; for specific referents.')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-700 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Articles (a/an/the)
+                            <button onclick="insertTemplateText('• Article Usage: Remember to use indefinite articles (&quot;a/an&quot;) for singular count nouns, and &quot;the&quot; for specific referents.')" class="text-xs text-indigo-950 bg-indigo-50 hover:bg-indigo-100 border border-indigo-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Indefinite & Definite Articles
                             </button>
                         </div>
                     </div>
 
                     <!-- Vocabulary Snippets -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Vocabulary Expansion</h4>
-                        <div class="flex flex-wrap gap-1.5">
-                            <button onclick="insertTemplateText('• Focused on natural English collocations (e.g., &quot;make a decision&quot; vs &quot;do a decision&quot;).')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-amber-50 hover:text-amber-800 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Natural Collocations
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-amber-600 mb-2 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                            <span>Vocabulary Expansion</span>
+                        </h4>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="insertTemplateText('• Collocations: Focused on natural English collocations (e.g., &quot;make a decision&quot; vs &quot;do a decision&quot;).')" class="text-xs text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Natural Collocations Practice
                             </button>
-                            <button onclick="insertTemplateText('• Learned idiomatic alternatives for common everyday statements to sound more like a native speaker.')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-amber-50 hover:text-amber-800 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Idiomatic Synonyms
+                            <button onclick="insertTemplateText('• Idioms: Learned idiomatic alternatives for common everyday statements to sound more like a native speaker.')" class="text-xs text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Idiomatic Conversational Synonyms
                             </button>
-                            <button onclick="insertTemplateText('• Discovered context-appropriate phrasal verbs to use instead of formal academic vocabulary (e.g., &quot;find out&quot; vs &quot;discover&quot;).')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-amber-50 hover:text-amber-800 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Phrasal Verbs
+                            <button onclick="insertTemplateText('• Phrasal Verbs: Discovered context-appropriate phrasal verbs to use instead of formal academic vocabulary (e.g., &quot;find out&quot; vs &quot;discover&quot;).')" class="text-xs text-amber-950 bg-amber-50 hover:bg-amber-100 border border-amber-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Everyday Phrasal Verbs list
                             </button>
                         </div>
                     </div>
 
                     <!-- Pronunciation Snippets -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Pronunciation & Rhythm</h4>
-                        <div class="flex flex-wrap gap-1.5">
-                            <button onclick="insertTemplateText('• Practiced ending consonant sounds (specifically plural /s/ /z/ sounds and past tense /t/ /d/ /id/ sounds).')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-rose-50 hover:text-rose-700 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Ending Consonants
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-rose-600 mb-2 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+                            <span>Pronunciation & Rhythm</span>
+                        </h4>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="insertTemplateText('• Ending Consonants: Practiced ending consonant sounds (specifically plural /s/ /z/ sounds and past tense /t/ /d/ /id/ sounds).')" class="text-xs text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Ending Consonants /s/, /z/, /d/
                             </button>
-                            <button onclick="insertTemplateText('• Highlighted native syllable/word stress patterns to improve voice rhythm and natural cadence.')" class="text-[11px] text-slate-600 bg-slate-100 hover:bg-rose-50 hover:text-rose-700 px-2.5 py-1.5 rounded-lg border border-slate-200/60 transition-colors text-left font-medium">
-                                Sy
+                            <button onclick="insertTemplateText('• Syllable & Word Stress: Highlighted native syllable/word stress patterns to improve overall speech rhythm and natural cadence.')" class="text-xs text-rose-950 bg-rose-50 hover:bg-rose-100 border border-rose-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Syllable Stress & Cadence
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Quick Positive Feedback Snippets -->
+                    <div>
+                        <h4 class="text-[11px] font-bold uppercase tracking-wider text-emerald-600 mb-2 flex items-center gap-1.5">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                            <span>Praise & Observations</span>
+                        </h4>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="insertTemplateText('• Active Listening: Excellent active listening and instant adjustments today during the drill sessions!')" class="text-xs text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Active Listening Praise
+                            </button>
+                            <button onclick="insertTemplateText('• Fluency Boost: Spoke with fantastic fluency, rich descriptive adjectives, and strong structural confidence.')" class="text-xs text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 px-3 py-2 rounded-xl transition-all text-left font-semibold shadow-sm">
+                                Spontaneous Fluency Praise
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </aside>
+
+    </main>
+
+    <!-- UI Toast Notifications Container -->
+    <div id="toast-container" class="no-print fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- Core Scripting Engine -->
+    <script>
+        // Set Theme System
+        function setTheme(themeName) {
+            const body = document.body;
+            body.classList.remove('theme-ivory', 'theme-sage', 'theme-midnight');
+            body.classList.add(themeName);
+            
+            // Re-style Navigation buttons based on currently selected theme
+            const themes = ['theme-ivory', 'theme-sage', 'theme-midnight'];
+            themes.forEach(t => {
+                const btn = document.getElementById('btn-' + t);
+                if (btn) {
+                    if (t === themeName) {
+                        btn.classList.add('bg-white', 'shadow-md');
+                        btn.classList.remove('text-slate-600', 'hover:text-slate-800');
+                        if (themeName === 'theme-midnight') {
+                            btn.classList.add('text-sky-400', 'bg-slate-800');
+                        } else if (themeName === 'theme-sage') {
+                            btn.classList.add('text-emerald-800');
+                        } else {
+                            btn.classList.add('text-amber-800');
+                        }
+                    } else {
+                        btn.classList.remove('bg-white', 'shadow-md', 'text-amber-800', 'text-emerald-800', 'text-sky-400', 'bg-slate-800');
+                        btn.classList.add('text-slate-600', 'hover:text-slate-800');
+                    }
+                }
+            });
+            localStorage.setItem('lesson_studio_theme', themeName);
+        }
+
+        // Active Focus Tracking & Magic Insertion System
+        let lastFocusedElement = null;
+
+        // Auto-Save Registry
+        const fields = [
+            'editable-doc-title', 'student-name', 'lesson-date', 'subject-course', 'lesson-no', 'today-topic', 'next-lesson',
+            'focus-vocab', 'focus-grammar', 'focus-pron', 'focus-reading', 'focus-listening', 'focus-speaking', 'focus-writing',
+            'live-canvas-notes', 'feedback-shoutout', 'feedback-strengths', 'feedback-focus',
+            'hw-vocab', 'hw-vocab-due', 'hw-grammar', 'hw-grammar-due', 'hw-pron', 'hw-pron-due',
+            'hw-reading', 'hw-reading-due', 'hw-listening', 'hw-listening-due', 'hw-speaking', 'hw-speaking-due',
+            'hw-writing', 'hw-writing-due'
+        ];
+
+        // Track user focus
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if (el) {
+                el.addEventListener('focus', () => {
+                    lastFocusedElement = el;
+                });
+                el.addEventListener('input', () => {
+                    saveWorkspaceData();
+                });
+            }
+        });
+
+        // Insert text at cursor inside contenteditable fields
+        function insertTemplateText(text) {
+            let target = lastFocusedElement;
+            
+            // If nothing is focused, fallback to live-canvas-notes
+            if (!target) {
+                target = document.getElementById('live-canvas-notes');
+            }
+            
+            target.focus();
+            
+            // Modern selection manipulation
+            const selection = window.getSelection();
+            if (!selection.rangeCount) return;
+            
+            const range = selection.getRangeAt(0);
+            range.deleteContents();
+            
+            // Support newline translation for rich insertions
+            const cleanText = text.replace(/\n/g, '<br>');
+            const tempDiv = document.createElement("div");
+            tempDiv.innerHTML = cleanText;
+            
+            const frag = document.createDocumentFragment();
+            let node;
+            while ( (node = tempDiv.firstChild) ) {
+                frag.appendChild(node);
+            }
+            
+            range.insertNode(frag);
+            
+            // Position cursor to end
+            selection.collapseToEnd();
+            saveWorkspaceData();
+            showToast("Added snippet into focused field!");
+        }
+
+        // Auto-Save Operations
+        function saveWorkspaceData() {
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) {
+                    localStorage.setItem('eln_' + id, el.innerHTML);
+                }
+            });
+        }
+
+        function loadWorkspaceData() {
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                const savedVal = localStorage.getItem('eln_' + id);
+                if (el && savedVal !== null) {
+                    el.innerHTML = savedVal;
+                }
+            });
+            
+            // Recover Theme state
+            const savedTheme = localStorage.getItem('lesson_studio_theme') || 'theme-ivory';
+            setTheme(savedTheme);
+        }
+
+        // Custom modal confirmation prompt for Resets
+        function resetTemplate() {
+            const confirmReset = window.confirm("Are you sure you want to clear your current notes? This will wipe the active draft.");
+            if (confirmReset) {
+                fields.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) {
+                        if (id === 'subject-course') {
+                            el.innerHTML = 'English';
+                        } else {
+                            el.innerHTML = '';
+                        }
+                    }
+                });
+                saveWorkspaceData();
+                showToast("Studio template reset to blank.");
+            }
+        }
+
+        // Toast Alert Utilities
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "bg-slate-900 text-white text-xs px-4 py-3 rounded-xl shadow-lg flex items-center gap-2 pointer-events-auto animate-bounce transition-all duration-300";
+            toast.innerHTML = `<i class="fa-solid fa-circle-check text-emerald-400"></i><span>${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Export Rich Table Document to System Clipboard
+        function copyToClipboard() {
+            const fetchVal = (id) => {
+                const el = document.getElementById(id);
+                return el ? el.innerHTML : '';
+            };
+
+            // Compile clean Word-styled raw tables matching structural patterns
+            const richHtmlExport = `
+            <div style="font-family: 'Arial', sans-serif; max-width: 800px; margin: 0 auto; color: #1e293b; padding: 20px;">
+                <h1 style="font-family: 'Georgia', serif; text-align: center; text-transform: uppercase; border-bottom: 2px solid #1e293b; padding-bottom: 8px; margin-bottom: 25px; font-size: 24px;">
+                    ${fetchVal('editable-doc-title') || 'English Lesson Notes & Feedback'}
+                </h1>
+                
+                <!-- Meta Grid -->
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #cbd5e1;">
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc; width: 25%;">Student Name:</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; width: 25%;">${fetchVal('student-name')}</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc; width: 25%;">Date:</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; width: 25%;">${fetchVal('lesson-date')}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Subject/Course:</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('subject-course')}</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Lesson No:</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('lesson-no')}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Today's Topic:</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('today-topic')}</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Next Lesson:</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('next-lesson')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- SECTION I -->
+                <h2 style="font-family: 'Arial', sans-serif; font-size: 15px; font-weight: bold; margin-top: 25px; margin-bottom: 12px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: #1e293b;">I. TODAY'S LESSON FOCUS</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #cbd5e1;">
+                    <thead>
+                        <tr style="background: #f1f5f9;">
+                            <th style="border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-weight: bold; width: 25%;">Skill / Pillar</th>
+                            <th style="border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-weight: bold; width: 75%;">What We Covered Today</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Vocabulary</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('focus-vocab')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Grammar</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('focus-grammar')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Pronunciation</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('focus-pron')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Reading</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('focus-reading')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Listening</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('focus-listening')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Speaking</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('focus-speaking')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Writing</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('focus-writing')}</td></tr>
+                    </tbody>
+                </table>
+
+                <!-- SECTION II -->
+                <h2 style="font-family: 'Arial', sans-serif; font-size: 15px; font-weight: bold; margin-top: 25px; margin-bottom: 12px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: #1e293b;">II. IN-CLASS CANVAS</h2>
+                <div style="border: 1px solid #cbd5e1; padding: 15px; background: #f8fafc; min-height: 250px; border-radius: 4px; margin-bottom: 25px; line-height: 1.6;">
+                    ${fetchVal('live-canvas-notes')}
+                </div>
+
+                <!-- SECTION III -->
+                <h2 style="font-family: 'Arial', sans-serif; font-size: 15px; font-weight: bold; margin-top: 25px; margin-bottom: 12px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: #1e293b;">III. TEACHER'S FEEDBACK & OBSERVATIONS</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #cbd5e1;">
+                    <thead>
+                        <tr style="background: #f1f5f9;">
+                            <th style="border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-weight: bold; width: 25%;">Feedback Category</th>
+                            <th style="border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-weight: bold; width: 75%;">Teacher's Notes & Observations</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #e0e7ff; color: #4338ca;">Teacher's Shout-Out!</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-style: italic;">${fetchVal('feedback-shoutout')}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #ecfdf5; color: #047857;">Key Strengths</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('feedback-strengths')}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #fff1f2; color: #be123c;">Areas to Focus On</td>
+                            <td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('feedback-focus')}</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- SECTION IV -->
+                <h2 style="font-family: 'Arial', sans-serif; font-size: 15px; font-weight: bold; margin-top: 25px; margin-bottom: 12px; border-bottom: 1px solid #cbd5e1; padding-bottom: 4px; color: #1e293b;">IV. HOMEWORK & ACTION ITEMS</h2>
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; border: 1px solid #cbd5e1;">
+                    <thead>
+                        <tr style="background: #f1f5f9;">
+                            <th style="border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-weight: bold; width: 25%;">Skill / Pillar</th>
+                            <th style="border: 1px solid #cbd5e1; padding: 10px; text-align: left; font-weight: bold; width: 55%;">Homework Task & Resources</th>
+                            <th style="border: 1px solid #cbd5e1; padding: 10px; text-align: center; font-weight: bold; width: 20%;">Due Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Vocabulary</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('hw-vocab')}</td><td style="border: 1px solid #cbd5e1; padding: 10px; text-align: center;">${fetchVal('hw-vocab-due')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Grammar</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('hw-grammar')}</td><td style="border: 1px solid #cbd5e1; padding: 10px; text-align: center;">${fetchVal('hw-grammar-due')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Pronunciation</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('hw-pron')}</td><td style="border: 1px solid #cbd5e1; padding: 10px; text-align: center;">${fetchVal('hw-pron-due')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Reading</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('hw-reading')}</td><td style="border: 1px solid #cbd5e1; padding: 10px; text-align: center;">${fetchVal('hw-reading-due')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Listening</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('hw-listening')}</td><td style="border: 1px solid #cbd5e1; padding: 10px; text-align: center;">${fetchVal('hw-listening-due')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Speaking</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('hw-speaking')}</td><td style="border: 1px solid #cbd5e1; padding: 10px; text-align: center;">${fetchVal('hw-speaking-due')}</td></tr>
+                        <tr><td style="border: 1px solid #cbd5e1; padding: 10px; font-weight: bold; background: #f8fafc;">Writing</td><td style="border: 1px solid #cbd5e1; padding: 10px;">${fetchVal('hw-writing')}</td><td style="border: 1px solid #cbd5e1; padding: 10px; text-align: center;">${fetchVal('hw-writing-due')}</td></tr>
+                    </tbody>
+                </table>
+
+                <p style="text-align: center; font-style: italic; color: #64748b; margin-top: 30px; font-size: 13px;">Thank you for your hard work today! Keep practicing!</p>
+            </div>`;
+
+            // Prepare for Clipboard Transfer
+            const blob = new Blob([richHtmlExport], { type: 'text/html' });
+            const item = new ClipboardItem({ "text/html": blob });
+
+            navigator.clipboard.write([item]).then(() => {
+                showToast("✨ Format Copied! Paste (Ctrl+V) directly into Word or Docs.");
+            }).catch(err => {
+                // Clipboard fail safety backup
+                navigator.clipboard.writeText(richHtmlExport).then(() => {
+                    showToast("Copied content as source. Paste into Word fallback.");
+                });
+            });
+        }
+
+        // Initialize Workspace & Load Cache on Boot
+        window.onload = loadWorkspaceData;
+    </script>
+</body>
+</html>
