@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Lesson Studio</title>
+    <style>
+        :root {
+            --bg-main: #fcfbfa;
+            --bg-card: #ffffff;
+            --text-main: #2c2a29;
+            --text-muted: #6b6661;
+            --border-color: #e6e3df;
+            --accent: #556b2f;
+            --accent-light: #f4f6f0;
+            --font-serif: 'Georgia', serif;
+            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+        .theme-sage {
+            --bg-main: #f4f6f0;
+            --bg-card: #ffffff;
+            --text-main: #2f3e2b;
+            --text-muted: #5c6f57;
+            --border-color: #dee3d5;
+            --accent: #3d5a34;
+            --accent-light: #e6edd8;
+        }
+        .theme-dark {
+            --bg-main: #121416;
+            --bg-card: #1a1d20;
+            --text-main: #f0f2f5;
+            --text-muted: #a0aec0;
+            --border-color: #2d3139;
+            --accent: #63b3ed;
+            --accent-light: #1c2d42;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            transition: all 0.3s ease;
+            line-height: 1.5;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 2rem;
+        }
+        @media (max-width: 900px) {
+            .container { grid-template-columns: 1fr; }
+            .sidebar { position: static !important; }
+        }
+        .main-workspace {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 3rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            align-self: start;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .panel {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+        }
+        h1 {
+            font-family: var(--font-serif);
+            font-size: 2rem;
+            font-weight: 400;
+            text-align: center;
+            letter-spacing: 0.05em;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            border-bottom: 2px solid var(--text-main);
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            font-family: var(--font-sans);
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            margin: 2.5rem 0 1rem 0;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 2rem;
+        }
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .meta-item label { font-weight: 600; min-width: 110px; color: var(--text-muted); }
+        .meta-item input {
+            border: none;
+            border-bottom: 1px dashed var(--border-color);
+            background: transparent;
+            color: var(--text-main);
+            padding: 0.2rem;
+            width: 100%;
+            font-family: var(--font-sans);
+        }
+        .meta-item input:focus { outline: none; border-bottom-color: var(--accent); }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+        th, td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem 1rem;
+            text-align: left;
+            vertical-align: top;
+        }
+        th {
+            background-color: var(--accent-light);
+            font-weight: 600;
+            color: var(--text-main);
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.05em;
+        }
+        td.skill-name {
+            font-weight: 600;
+            width: 150px;
+            background-color: var(--bg-main);
+        }
+        textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: var(--text-main);
+            resize: vertical;
+            font-family: var(--font-sans);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        textarea:focus { outline: none; }
+        .canvas-area {
+            width: 100%;
+            min-height: 250px;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-main);
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 6px;
+            background: var(--accent);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            text-align: center;
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+        .btn:hover { opacity: 0.9; }
+        .theme-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .btn-theme {
+            padding: 0.4rem;
+            font-size: 0.75rem;
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-main);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .chip-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            margin-top: 0.5rem;
+        }
+        .chip {
+            background: var(--accent-light);
+            color: var(--text-main);
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        .chip:hover { border-color: var(--accent); }
+        .panel h3 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; margin-top: 1rem; color: var(--text-muted); }
+        .panel h3:first-of-type { margin-top: 0; }
+        .status-msg {
+            font-size: 0.8rem;
+            text-align: center;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            min-height: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- WORKSPACE -->
+    <div class="main-workspace" id="print-area">
+        <h1>English Lesson Notes</h1>
+        
+        <div class="meta-grid">
+            <div class="meta-item"><label>Student Name:</label><input type="text" id="studentName"></div>
+            <div class="meta-item"><label>Date:</label><input type="text" id="lessonDate"></div>
+            <div class="meta-item"><label>Subject/Course:</label><input type="text" id="subject" value="English"></div>
+            <div class="meta-item"><label>Lesson No:</label><input type="text" id="lessonNo"></div>
+            <div class="meta-item"><label>Today's Topic:</label><input type="text" id="topic"></div>
+            <div class="meta-item"><label>Next Lesson:</label><input type="text" id="nextLesson"></div>
+        </div>
+
+        <h2>I. Today's Lesson Focus</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:150px;">Skill / Pillar</th>
+                    <th>What We Covered Today</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="skill-name">Vocabulary</td><td><textarea rows="2" id="f-vocab"></textarea></td></tr>
+                <tr><td class="skill-name">Grammar</td><td><textarea rows="2" id="f-gram"></textarea></td></tr>
+                <tr><td class="skill-name">Pronunciation</td><td><textarea rows="2" id="f-pron"></textarea></td></tr>
+                <tr><td class="skill-name">Reading</td><td><textarea rows="2" id="f-read"></textarea></td></tr>
+                <tr><td class="skill-name">Listening</td><td><textarea rows="2" id="f-list"></textarea></td></tr>
+                <tr><td class="skill-name">Speaking</td><td><textarea rows="2" id="f-speak"></textarea></td></tr>
+                <tr><td class="skill-name">Writing</td><td><textarea rows="2" id="f-write"></textarea></td></tr>
+            </tbody>
+        </table>
+
+        <h2>II. In-Class Canvas</h2>
+        <textarea class="canvas-area" id="canvasNotes" placeholder="Type raw structural notes, corrections, errors, and live stream-of-consciousness layout details here..."></textarea>
+
+        <h2>III. Teacher's Feedback & Observations</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:180px;">Feedback Category</th>
+                    <th>Teacher's Notes & Observations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="skill-name">Teacher's Shout-Out!</td><td><textarea rows="2" id="fb-shout" placeholder="What I was most proud of today..."></textarea></td></tr>
+                <tr><td class="skill-name">Key Strengths</td><td><textarea rows="3" id="fb-strengths" placeholder="• Item 1&#10;• Item 2"></textarea></td></tr>
+                <tr><td class="skill-name">Areas to Focus On</td><td><textarea rows="3" id="fb-focus" placeholder="• Item 1&#10;• Item 2"></textarea></td></tr>
+            </tbody>
+        </table>
+
+        <h2>IV. Homework & Action Items</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width:150px;">Skill / Pillar</th>
+                    <th>Homework Task & Resources</th>
+                    <th style="width:120px;">Due Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td class="skill-name">Vocabulary</td><td><textarea rows="1" id="hw-vocab"></textarea></td><td><input type="text" style="width:100%; border:none; background:transparent; color:var(--text-main);" id="hwd-vocab"></td></tr>
+                <tr><td class="skill-name">Grammar</td><td><textarea rows="1" id="hw-gram"></textarea></td><td><input type="text" style="width:100%; border:none; background:transparent; color:var(--text-main);" id="hwd-gram"></td></tr>
+                <tr><td class="skill-name">Pronunciation</td><td><textarea rows="1" id="hw-pron"></textarea></td><td><input type="text" style="width:100%; border:none; background:transparent; color:var(--text-main);" id="hwd-pron"></td></tr>
+                <tr><td class="skill-name">Reading</td><td><textarea rows="1" id="hw-read"></textarea></td><td><input type="text" style="width:100%; border:none; background:transparent; color:var(--text-main);" id="hwd-read"></td></tr>
+                <tr><td class="skill-name">Listening</td><td><textarea rows="1" id="hw-list"></textarea></td><td><input type="text" style="width:100%; border:none; background:transparent; color:var(--text-main);" id="hwd-list"></td></tr>
+                <tr><td class="skill-name">Speaking</td><td><textarea rows="1" id="hw-speak"></textarea></td><td><input type="text" style="width:100%; border:none; background:transparent; color:var(--text-main);" id="hwd-speak"></td></tr>
+                <tr><td class="skill-name">Writing</td><td><textarea rows="1" id="hw-write"></textarea></td><td><input type="text" style="width:100%; border:none; background:transparent; color:var(--text-main);" id="hwd-write"></td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- CONTROL SIDEBAR -->
+    <div class="sidebar">
+        <div class="panel">
+            <h3>Actions</h3>
+            <button class="btn" onclick="exportToWord()" style="margin-bottom: 0.5rem;">Copy to Word / Docs</button>
+            <button class="btn" onclick="window.print()" style="background:#6b6661;">Print to PDF</button>
+            <div class="status-msg" id="status"></div>
+        </div>
+
+        <div class="panel">
+            <h3>Visual Style</h3>
+            <div class="theme-buttons">
+                <button class="btn-theme" onclick="setTheme('ivory')">Ivory</button>
+                <button class="btn-theme" onclick="setTheme('sage')">Sage</button>
+                <button class="btn-theme" onclick="setTheme('dark')">Dark</button>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h3>Magic Toolbox</h3>
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-bottom:0.5rem;">Click a chip to quickly drop text into your active note area:</p>
+            
+            <h3>Corrections</h3>
+            <div class="chip-group">
+                <span class="chip" onclick="insertText('❌ Incorrect: \n👉 Correct: ')">Correction Template</span>
+                <span class="chip" onclick="insertText('Pronunciation check: / /')">Phonetics Breakdown</span>
+            </div>
+
+            <h3>Common Rules</h3>
+            <div class="chip-group">
+                <span class="chip" onclick="insertText('Subject-Verb Agreement rule: ')">S-V Agreement</span>
+                <span class="chip" onclick="insertText('Remember to use third-person singular \'-s\'')">Third Person -s</span>
+            </div>
+
+            <h3>Quick Feedback</h3>
+            <div class="chip-group">
+                <span class="chip" onclick="insertText('Excellent active listening and instant adjustments today!')">Great Adjustments</span>
+                <span class="chip" onclick="insertText('Spoke with fantastic fluency and structural confidence.')">Fluency Praise</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Theme Control
+    function setTheme(theme) {
+        document.body.className = '';
+        if(theme !== 'ivory') document.body.classList.add('theme-' + theme);
+        localStorage.setItem('ln_theme', theme);
+    }
+
+    // Auto-Save System
+    const fields = [
+        'studentName', 'lessonDate', 'subject', 'lessonNo', 'topic', 'nextLesson',
+        'f-vocab', 'f-gram', 'f-pron', 'f-read', 'f-list', 'f-speak', 'f-write',
+        'canvasNotes', 'fb-shout', 'fb-strengths', 'fb-focus',
+        'hw-vocab', 'hw-gram', 'hw-pron', 'hw-read', 'hw-list', 'hw-speak', 'hw-write',
+        'hwd-vocab', 'hwd-gram', 'hwd-pron', 'hwd-read', 'hwd-list', 'hwd-speak', 'hwd-write'
+    ];
+
+    function saveAll() {
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            if(el) localStorage.setItem('ln_' + id, el.value);
+        });
+    }
+
+    function loadAll() {
+        fields.forEach(id => {
+            const el = document.getElementById(id);
+            const val = localStorage.getItem('ln_' + id);
+            if(el && val !== null) el.value = val;
+        });
+        const savedTheme = localStorage.getItem('ln_theme');
+        if(savedTheme) setTheme(savedTheme);
+    }
+
+    // Magic Toolbox insertion logic
+    let activeInputId = 'canvasNotes';
+    fields.forEach(id => {
+        const el = document.getElementById(id);
+        if(el && (el.tagName === 'TEXTAREA' || el.type === 'text')) {
+            el.addEventListener('focus', () => { activeInputId = id; });
+            el.addEventListener('input', saveAll);
+        }
+    });
+
+    function insertText(text) {
+        const input = document.getElementById(activeInputId);
+        if(!input) return;
+        const start = input.selectionStart;
+        const end = input.selectionEnd;
+        input.value = input.value.substring(0, start) + text + input.value.substring(end);
+        input.focus();
+        input.selectionStart = input.selectionEnd = start + text.length;
+        saveAll();
+    }
+
+    // Export to Word Engine
+    function exportToWord() {
+        function getV(id) { 
+            const el = document.getElementById(id);
+            return el ? el.value.replace(/\n/g, '<br>') : ''; 
+        }
+
+        const htmlContent = `
+        <div style="font-family: 'Arial', sans-serif; max-width: 800px; margin: 0 auto; color: #2c2a29;">
+            <h1 style="font-family: 'Georgia', serif; text-align: center; text-transform: uppercase; border-bottom: 2px solid #2c2a29; padding-bottom: 5px; margin-bottom: 20px;">English Lesson Notes</h1>
+            
+            <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px;">
+                <tr>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc; width: 15%;">Student:</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; width: 35%;">${getV('studentName')}</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc; width: 15%;">Date:</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; width: 35%;">${getV('lessonDate')}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Course:</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('subject')}</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Lesson No:</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('lessonNo')}</td>
+                </tr>
+                <tr>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Topic:</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('topic')}</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Next Lesson:</td>
+                    <td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('nextLesson')}</td>
+                </tr>
+            </table>
+
+            <h2 style="font-size: 14px; text-transform: uppercase; margin-top: 30px; margin-bottom: 10px; color: #000;">I. Today's Lesson Focus</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f1f5f9;">
+                        <th style="border: 1px solid #cbd5e1; padding: 8px; text-align: left; width: 180px;">Skill / Pillar</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px; text-align: left;">What We Covered Today</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Vocabulary</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('f-vocab')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Grammar</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('f-gram')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Pronunciation</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('f-pron')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Reading</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('f-read')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Listening</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('f-list')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Speaking</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('f-speak')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Writing</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('f-write')}</td></tr>
+                </tbody>
+            </table>
+
+            <h2 style="font-size: 14px; text-transform: uppercase; margin-top: 30px; margin-bottom: 10px; color: #000;">II. In-Class Canvas</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr><td style="border: 1px solid #cbd5e1; padding: 15px; min-height: 200px; background: #fafafa; vertical-align: top;">${getV('canvasNotes')}</td></tr>
+            </table>
+
+            <h2 style="font-size: 14px; text-transform: uppercase; margin-top: 30px; margin-bottom: 10px; color: #000;">III. Teacher's Feedback & Observations</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f1f5f9;">
+                        <th style="border: 1px solid #cbd5e1; padding: 8px; text-align: left; width: 180px;">Feedback Category</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px; text-align: left;">Teacher's Notes & Observations</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Teacher's Shout-Out!</td><td style="border: 1px solid #cbd5e1; padding: 8px; font-style: italic; color: #0369a1;">${getV('fb-shout')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Key Strengths</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('fb-strengths')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Areas to Focus On</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('fb-focus')}</td></tr>
+                </tbody>
+            </table>
+
+            <h2 style="font-size: 14px; text-transform: uppercase; margin-top: 30px; margin-bottom: 10px; color: #000;">IV. Homework & Action Items</h2>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f1f5f9;">
+                        <th style="border: 1px solid #cbd5e1; padding: 8px; text-align: left; width: 180px;">Skill / Pillar</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px; text-align: left;">Homework Task & Resources</th>
+                        <th style="border: 1px solid #cbd5e1; padding: 8px; text-align: left; width: 120px;">Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Vocabulary</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hw-vocab')}</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hwd-vocab')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Grammar</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hw-gram')}</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hwd-gram')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Pronunciation</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hw-pron')}</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hwd-pron')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Reading</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hw-read')}</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hwd-read')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Listening</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hw-list')}</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hwd-list')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Speaking</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hw-speak')}</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hwd-speak')}</td></tr>
+                    <tr><td style="border: 1px solid #cbd5e1; padding: 8px; font-weight: bold; background: #f8fafc;">Writing</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hw-write')}</td><td style="border: 1px solid #cbd5e1; padding: 8px;">${getV('hwd-write')}</td></tr>
+                </tbody>
+            </table>
+            <p style="text-style: italic; text-align: center; margin-top: 25px; font-size: 12px; color: #666;">Thank you for your hard work today! Keep practicing!</p>
+        </div>`;
+
+        const blob = new Blob([htmlContent], { type: 'text/html' });
+        const item = new ClipboardItem({ "text/html": blob });
+        
+        navigator.clipboard.write([item]).then(() => {
+            const status = document.getElementById('status');
+            status.innerText = "✨ Successfully copied! Paste directly into Word (Ctrl+V).";
+            status.style.color = "var(--accent)";
+            setTimeout(() => { status.innerText = ""; }, 4000);
+        }).catch(err => {
+            alert("Clipboard copy failed. Please use print/PDF method instead.");
+        });
+    }
+
+    window.onload = loadAll;
+</script>
+
+</body>
+</html>
